@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>com.harvey.flushdns</string>
+	<key>connections</key>
+	<dict>
+		<key>868DBD3D-B0CB-42CE-B95F-B5A4ED6FB0E1</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>F8596C57-F9FB-4BB2-9D55-9659646FE2A4</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>F8596C57-F9FB-4BB2-9D55-9659646FE2A4</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>54BD1687-10E2-4EA9-BAAD-7450CF391F22</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Harvey Doveton</string>
+	<key>description</key>
+	<string>Flush DNS on all versions between 10.6 to 12.0</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Flush DNS</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string>DNS has been flushed - {query}</string>
+				<key>title</key>
+				<string>Flush DNS</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>54BD1687-10E2-4EA9-BAAD-7450CF391F22</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>keyword</key>
+				<string>flush</string>
+				<key>subtext</key>
+				<string></string>
+				<key>text</key>
+				<string>Flush DNS</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>868DBD3D-B0CB-42CE-B95F-B5A4ED6FB0E1</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>0</integer>
+				<key>script</key>
+				<string>#!/bin/bash
+
+ver=`sw_vers -productVersion`
+IFS='.' read -r -a array &lt;&lt;&lt; "$ver"
+primary="${array[0]}"
+version="${array[0]}.${array[1]}"
+
+modern1 () { osascript -e 'do shell script "sudo killall -HUP mDNSResponder" with administrator privileges'; }
+modern2 () { osascript -e 'do shell script "sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder" with administrator privileges'; }
+
+
+case $primary in
+	10)
+		case $version in
+			10.6)
+				echo "Version ${version} is Snow Leopard" 
+				osascript -e 'do shell script "sudo dscacheutil -flushcache" with administrator privileges'
+				;;
+			10.10)
+				case $ver in
+					10.10.0|10.10.1|10.10.2|10.10.3)
+						echo "Version ${version} is Yosemite and 10.10.0 - 10.10.3"
+						osascript -e 'do shell script "sudo discoveryutil mdnsflushcache" with administrator privileges'
+						;;
+					10.10.4|10.10.5)
+						echo "Version ${version} is Yosemite and 10.10.4 or 10.10.5"
+						modern1
+						;;
+					*)
+						echo "Unknown version of Yosemite"
+						;;
+				esac
+				;;
+			10.7|10.8|10.9|10.11|10.12|10.13|10.14)
+				echo "Version ${version} is Lion, Mountain Lion, Mavericks, El Capitan, Sierra, High Sierra or Mojave"
+				modern1
+				;;
+			10.15)
+				echo "Version ${version} is Catalina"
+				modern2
+				;;
+			*)
+				echo "Version ${version} is an Unknown Version"
+				exit
+				;;
+		esac
+		;;
+	11|12)
+		echo "Version ${version} is BigSur or Monterey"
+		modern2
+		;;
+	*)
+		echo "Version ${version} is a future version which is un-tested and may or may not work. Please check for new releases."
+		modern2
+		;;
+esac</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>F8596C57-F9FB-4BB2-9D55-9659646FE2A4</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string>Detects the current OS version and performs the correct command to flush the DNS cache. Requires admin credentials to run.</string>
+	<key>uidata</key>
+	<dict>
+		<key>54BD1687-10E2-4EA9-BAAD-7450CF391F22</key>
+		<dict>
+			<key>xpos</key>
+			<integer>540</integer>
+			<key>ypos</key>
+			<integer>140</integer>
+		</dict>
+		<key>868DBD3D-B0CB-42CE-B95F-B5A4ED6FB0E1</key>
+		<dict>
+			<key>xpos</key>
+			<integer>140</integer>
+			<key>ypos</key>
+			<integer>140</integer>
+		</dict>
+		<key>F8596C57-F9FB-4BB2-9D55-9659646FE2A4</key>
+		<dict>
+			<key>xpos</key>
+			<integer>340</integer>
+			<key>ypos</key>
+			<integer>140</integer>
+		</dict>
+	</dict>
+	<key>variablesdontexport</key>
+	<array/>
+	<key>version</key>
+	<string>3.0</string>
+	<key>webaddress</key>
+	<string></string>
+</dict>
+</plist>

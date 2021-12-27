@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<workflow>
+  <name>Alfred Markdown Table</name>
+  <version>1.2</version>
+  <bundle>com.crispgm.alfred_markdown_table</bundle>
+  <updated>1577696197</updated>
+  <file>alfred-markdown-table.alfredworkflow</file>
+</workflow>

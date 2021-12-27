@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<workflow>
+  <name>gitignore</name>
+  <version>2.1.1</version>
+  <bundle>de.jandavid.alfred.gitignore</bundle>
+  <updated>1639417880</updated>
+  <file>gitignore.alfredworkflow</file>
+</workflow>
