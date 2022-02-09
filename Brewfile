@@ -47,6 +47,7 @@ mas "DaisyDisk", id: 411643860
 mas "Dark Reader for Safari", id: 1438243180
 mas "Enpass - Password Manager", id: 732710998
 mas "Gifski", id: 1351639930
+mas "超级右键-iRightMouse", id: 1497428978
 mas "KakaoTalk", id: 869223134
 mas "Keynote", id: 409183694
 mas "Magnet", id: 441258766
