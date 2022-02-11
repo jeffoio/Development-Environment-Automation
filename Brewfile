@@ -57,6 +57,7 @@ mas "Microsoft Word", id: 462054704
 mas "Movist", id: 461788075
 mas "Octotree", id: 1457450145
 mas "SnippetsLab", id: 1006087419
+mas "Sourcegraph for Safari", id: 1543262193
 mas "Spark – Email App by Readdle", id: 1176895641
 mas "Unicorn Blocker", id: 1231935892
 mas "Yoink", id: 457622435
