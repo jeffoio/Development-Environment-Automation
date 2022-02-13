@@ -45,6 +45,7 @@ mas "BetterJSON for Safari", id: 1511935951
 mas "ColorSlurp", id: 1287239339
 mas "DaisyDisk", id: 411643860
 mas "Dark Reader for Safari", id: 1438243180
+mas "DevCleaner for Xcode", id: 1388020431
 mas "Enpass - Password Manager", id: 732710998
 mas "Gifski", id: 1351639930
 mas "超级右键-iRightMouse", id: 1497428978
